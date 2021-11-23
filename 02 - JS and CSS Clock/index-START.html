@@ -67,8 +67,50 @@
   </style>
 
   <script>
+    const hour = document.getElementsByClassName('hour-hand')[0];
+    const min = document.getElementsByClassName('min-hand')[0];
+    const sec = document.getElementsByClassName('second-hand')[0];
+    hour.style.transform = "rotate(7deg)";
+    hour.style.transformOrigin = "right";
+    min.style.transformOrigin = "right";
+    sec.style.transformOrigin = "right";
 
+    let date = new Date();
+    console.log(date.getMinutes()); 
+    console.log(date.getHours()); 
 
+    let sec_degree = (date.getSeconds()+15)*6;
+    let min_degree = (date.getMinutes()+15)*60*0.1;
+    console.log((date.getHours()+6)%12);
+    let hour_degree = ((date.getHours()+3)%12*60*60+date.getMinutes()*60+date.getSeconds())*1/120;
+    setInterval(()=>{
+      sec_degree = (sec_degree+6)%360;
+      
+      sec.style.transform = `rotate(${sec_degree}deg)`;
+      setTimeout(()=>{
+        sec.style.transform = `rotate(${sec_degree-0.5}deg)`;
+        setTimeout(()=>{
+          sec.style.transform = `rotate(${sec_degree}deg)`;
+        },50)
+      },75)
+
+      min_degree = (min_degree+0.1)%360;
+      min.style.transform = `rotate(${min_degree}deg)`;
+      hour_degree = (hour_degree+(1/120))%360;
+      hour.style.transform = `rotate(${hour_degree}deg)`;
+    },1000)
+
+    
+    // setInterval(()=>{
+    //   min_degree = (min_degree+6)%360;
+    //   min.style.transform = `rotate(${min_degree}deg)`;
+    // },1000*60)
+
+    // let hour_degree = (date.getHours()+15)*6;
+    // setInterval(()=>{
+    //   hour_degree = (hour_degree+6)%360;
+    //   hour.style.transform = `rotate(${hour_degree}deg)`;
+    // },1000*60*60)
   </script>
 </body>
 </html>

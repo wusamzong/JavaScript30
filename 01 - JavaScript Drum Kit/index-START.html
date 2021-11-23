@@ -58,7 +58,31 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  
+  const btns = document.querySelectorAll('div[data-key]');
+  const audios = document.querySelectorAll('audio[data-key]');
+  audios.forEach((el , idx)=>{
+    // console.log(el.dataset.key);
+    document.addEventListener('keydown',(e)=>{  //問題是這樣就會有9個keydown的listener
+      if(e.keyCode == el.dataset.key){
+        el.play();
 
+
+        btns[idx].classList.add('playing');
+        setTimeout(()=>{
+          btns[idx].classList.remove('playing');
+        },100)
+        
+      }
+    })
+  })
+
+  /** 
+   * how to be better ?
+   * 當keydown的時候，呼叫一個function(e)
+   * 在即時找出 e 所對應到的 element
+   * 使用 document.querySelector(`div[data-key="${e.keyCode}"]`);
+  */
 </script>
 
 

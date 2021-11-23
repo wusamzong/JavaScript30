@@ -37,28 +37,79 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+    let arr1 = inventors.filter((e)=>{
+      return e.year>=1500 && e.year<1600;
+    })
+    console.log(arr1);
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    let arr2 = inventors.map(x =>`${x.first} ${x.last}`);
+    console.log(arr2);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
-
+    let arr3 = inventors.sort((a,b)=>{
+      return a.year-b.year;  
+      /**
+       * 若return >0 則 b->a
+       *          <0 則 a->b
+       *          =0 也 不互換
+      */
+    })
+    console.log(arr3);
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    let reducer = (total,cur)=> total + cur.passed-cur.year;
+    let arr4 = inventors.reduce(reducer,0) // Array.prototype.reduce(function, initialValue)
+    console.log(arr4);
 
     // 5. Sort the inventors by years lived
+    let arr5 = inventors.sort((a,b)=>{
+      let first = a.passed-a.year;
+      let next = b.passed-b.year;
+      return first-next;
+
+    })
+    console.log(arr5);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // document.querySelectorAll('.mw-category a') 型別為nodeList，但若要使用Array的function則不符合我們的需要
+    // Array.from()來將nodeList轉換為list
+
+    // 若要把querySelectorAll分兩段尋找的話則
+    // let tmp = document.querySelectorAll('.mw-category')
+    // let href = tmp[0].querySele...    要非常注意到他像陣列依樣，需要注意使用[0]
+    /*
+    const links =Array.from(document.querySelectorAll('.mw-category a'));
+    const de = links
+                .map(link => link.textContent)
+                .filter(streetName => streetName.includes('de'));
+    */
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let people_split = people.map((p)=>{
+      return p.split(', ')
+    })
+    let people_sort = people_split.sort((a,b)=>{
+      return a[1].charCodeAt(0)-b[1].charCodeAt(0);
+    })
+    let people_map = people_sort.map(p=>`${p[0]}, ${p[1]}`)
+    console.log(people_map);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const datas = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    let result = datas.reduce((obj, data)=>{
+      if(!obj[data]){
+        obj[data]=0;
+      }
+      obj[data]++;
+      return obj;
+    },{})
+    console.log(result);
 
   </script>
 </body>

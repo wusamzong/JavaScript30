@@ -18,13 +18,18 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img class="img" src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
 
     /*
       misc styles, nothing to do with CSS variables
     */
+    :root{
+      --border-size: 10px;
+      --border-color: #ffc600;
+      --blur-degree: 10px;
+    }
 
     body {
       text-align: center;
@@ -42,9 +47,38 @@
     input {
       width: 100px;
     }
+    .img{
+      border:  var(--border-size) solid var(--border-color);
+
+      filter: blur(var(--blur-degree));
+    }
   </style>
 
   <script>
+    let img = document.getElementsByClassName('img')[0];
+    let space = document.getElementById('spacing');
+    let blur = document.getElementById('blur');
+    let base = document.getElementById('base');
+    space.addEventListener('mousemove', (e)=>{ //使用change的話，沒有辦法在拉的時候動態改變，用mousemove則可以
+      let el = document.querySelector('input[id="spacing"]');
+      //document.body.style.getPropertyValue('--border-size');
+      document.body.style.setProperty('--border-size', el.value+'px');
+      // document.documentElement.style.setProperty(); // 也可以這樣寫
+
+    })
+    blur.addEventListener('mousemove', (e)=>{
+      let el = document.querySelector('input[id="blur"]');
+      document.body.style.setProperty('--blur-degree', el.value+'px');
+
+    })
+    base.addEventListener('mousemove', (e)=>{
+      let el = document.querySelector('input[id="base"]');
+      console.log(el.value);
+      document.body.style.setProperty('--border-color', el.value);
+
+    })
+
+    console.log(this.dataset);
   </script>
 
 </body>

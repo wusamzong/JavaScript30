@@ -63,6 +63,7 @@
     const inputs = document.querySelectorAll('.controls input');
 
     function handleUpdate() {
+      console.log(this); //這裡的this還是在input裡面，所以this就是目前這個input
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
     }
