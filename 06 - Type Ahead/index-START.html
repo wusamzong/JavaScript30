@@ -16,6 +16,84 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let cityData = [];
+fetch(endpoint).then((res)=>{
+  return res.json() /* return a promise */
+}).then((data)=>{
+  cityData=[...data];
+  //console.log(cityData);
+})
+result = [];
+let input = document.getElementsByClassName('search')[0];
+let ul = document.getElementsByClassName('suggestions')[0];
+/*
+function highlight(father, string, keyword){
+  let location = [];
+  let length = keyword.length;
+  let curStr;
+  let i=15
+  console.log(string);
+  let compare = string.toLowerCase().indexOf(keyword.toLowerCase(),i)
+  while(compare!=-1){
+    location.push(compare)
+    i = i+compare+1;
+    console.log(i);
+    console.log(compare);
+  }
+  console.log(location);
+  
+  // if(location!=0){
+  //   curStr = string.substring(0,location-1);
+  //   addSpan(father, curStr)
+  // }
+
+  // curStr = string.substring(location, location+length)
+
+  // addSpan(father, curStr, 'highlight')
+
+  // if(location+length!=string.length){
+  //   curStr = string.substring(location+length, string.length)
+  //   addSpan(father, curStr)
+  // }
+}*/
+
+function addSpan(father, string, cls){
+  let span = document.createElement('span');
+  if(cls)
+    span.classList.add(cls);
+  span.textContent = string;
+  father.appendChild(span);
+}
+
+
+input.addEventListener('input',(e)=>{
+  // console.log(e.target.value);
+  result = cityData.filter((data)=>{
+    return data.city.toLowerCase().includes(e.target.value) || data.state.toLowerCase().includes(e.target.value);
+  })
+
+  Array.from(ul.getElementsByTagName('li')).forEach((el)=>{
+      el.remove();
+  })
+
+  
+  const html = result.map(place => {
+    const regex = new RegExp(e.target.value, 'gi'); // 'gi' 為忽略大小寫
+    const cityName = place.city.replace(regex, `<span class="hl">${e.target.value}</span>`);
+    const stateName = place.state.replace(regex, `<span class="hl">${e.target.value}</span>`);
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${new Intl.NumberFormat().format(place.population)}</span>
+      </li>
+    `;
+  }).join('');
+
+  ul.innerHTML = html;
+
+
+})
+
 
 </script>
 </body>

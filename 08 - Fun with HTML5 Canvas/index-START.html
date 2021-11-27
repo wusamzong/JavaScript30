@@ -7,6 +7,78 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  let canvas = document.getElementById('draw')
+  let ctx = canvas.getContext('2d');
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round'
+
+
+  let x,y, isDraw = false;
+  canvas.addEventListener('mousedown',(e)=>{
+    isDraw = true;
+    x = e.offsetX;
+    y = e.offsetY;
+  })
+  canvas.addEventListener('mousemove', e=>{
+    
+    if(isDraw == false)
+      return;
+    drawCircle(x,y, e.offsetX, e.offsetY);
+    x = e.offsetX;
+    y = e.offsetY;
+  })
+  canvas.addEventListener('mouseup',(e)=>{
+    if(isDraw == false)
+      return;
+    drawCircle(x,y, e.offsetX, e.offsetY);
+    x = e.offsetX;
+    y = e.offsetY;
+    isDraw = false;
+  })
+  //let color = [255,0,255];
+  let size = 1;
+  let color = 0;
+  let direction = true
+  function drawCircle(x,y, newX,newY){
+    console.log('drawing');
+    ctx.strokeStyle = `hsl(${(color++)%360},100%,50%)`;
+
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(newX,newY)
+    
+    ctx.stroke();
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+    direction = !direction;
+    }
+
+    if(direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }    
+
+
+  }
+
+  /*function changeColor(){
+    console.log(color);
+    for(let i=0;i<color.length;i++){
+      color[i]+=8;
+      color[i] = color[i]%512
+    }
+
+    return color.map((hex)=>{
+      if(hex>255){
+        return (hex - hex%255).toString(16);
+      }else if(hex<=255){
+        return hex.toString(16);
+      }
+    }).join('');
+    
+
+  }*/
+
 </script>
 
 <style>
