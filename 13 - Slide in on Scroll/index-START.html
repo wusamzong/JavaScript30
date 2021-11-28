@@ -58,6 +58,36 @@
       };
     }
 
+    let imgs = Array.from(document.getElementsByTagName('img')) 
+    setTimeout(()=>{
+        imgs = imgs.map((el)=>{
+          return [ el.offsetTop , el]
+        })
+    },200)
+    
+
+    document.addEventListener('scroll',()=>{
+      
+      let img = imgs.map((el)=>{
+        let reactPostion = [el[0]-400, el[0]+400];
+        console.log(window.scrollY,reactPostion[1]);
+        console.log(window.screenY<reactPostion[1]);
+        return (window.scrollY>reactPostion[0] && window.scrollY<reactPostion[1])
+        
+      })
+      console.log(img);
+      img.forEach((e,idx)=>{
+        if(e==true){
+          imgs[idx][1].classList.add('active')
+        }else{
+          imgs[idx][1].classList.remove('active')
+        }
+      })
+      
+
+
+    })
+
   </script>
 
   <style>

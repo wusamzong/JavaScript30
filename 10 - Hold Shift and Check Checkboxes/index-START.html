@@ -96,6 +96,36 @@
   </div>
 
 <script>
+  let list = document.querySelectorAll('.item');
+  let lastClick = -1;
+  let shift = false;
+
+  list.forEach((el,idx)=>{
+    el.addEventListener('change',(e)=>{
+      if(e.target.checked == true && lastClick!=idx && lastClick!=-1 && shift==true){
+        let range = [idx,lastClick].sort();
+        for(let i=range[0];i<=range[1];i++){
+          let checkbox = list[i].querySelector('input');
+          checkbox.setAttribute('checked','')
+        }
+      }
+      lastClick = idx;
+    })
+  })
+
+  document.addEventListener('keydown',(e)=>{
+    if(e.code == 'ShiftLeft' || e.code == 'ShiftRight')
+      shift = true;
+  })
+  document.addEventListener('keyup',(e)=>{
+    if(e.code == 'ShiftLeft' || e.code == 'ShiftRight')
+      shift = false;
+
+  })
+
+
+
+
 </script>
 </body>
 </html>
