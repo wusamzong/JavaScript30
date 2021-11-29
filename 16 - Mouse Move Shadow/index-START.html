@@ -26,15 +26,31 @@
     justify-content: center;
     align-items: center;
     color: black;
+    /* text-shadow: rgb(255, 75, 246); */
   }
 
   h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    
     font-size: 100px;
   }
   </style>
 
 <script>
+  let text = document.getElementsByTagName('div')[0];  //不知道為什麼 get <h1> 會有問題?
+  console.log(text);
+  let x,y;
+  document.addEventListener('mousemove',(e)=>{
+    x = Math.round(e.offsetX / window.innerWidth *50)
+    y = Math.round(e.offsetY / window.innerHeight *50)
+    
+    text.style.textShadow = `
+      ${x}vh ${y}vh 0 rgb(54, 255, 211),
+      ${y}vh ${x}vh 0 rgb(255, 54, 195),
+      ${-x}vh ${-y}vh 0 rgb(255, 218, 54),
+      ${-y}vh ${x}vh 0 rgb(178, 85, 255)   
+    `
+  })
+
 </script>
 </body>
 </html>

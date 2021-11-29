@@ -5,7 +5,7 @@
   <title>LocalStorage</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="updateList()">
   <!--
       Fish SVG Cred:
       https://thenounproject.com/search/?q=fish&i=589236
@@ -18,6 +18,7 @@
     <p></p>
     <ul class="plates">
       <li>Loading Tapas...</li>
+      
     </ul>
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
@@ -28,8 +29,68 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  
+  const submit = document.querySelector('input[type="submit"]');
 
+  function update_checked(){
+    get_items();
+    setTimeout(()=>{
+      let input = document.querySelectorAll('input[type="checkbox"]')
+      input = Array.from(input)
+      input.forEach((el,idx)=>{
+        el.addEventListener('click',(e)=>{
+          items[idx].done = e.target.checked
+          window.localStorage.setItem('items',JSON.stringify(items))
+        })
+      })
+      
+     },150)
+  }
+  update_checked()
+
+  function get_items(){
+    items = JSON.parse(window.localStorage.getItem('items'));
+    if(items == null)
+      items = [] ;
+  }
+  
+  function updateList(){
+    get_items();
+    setTimeout(()=>{
+      itemsList.innerHTML = items.map((el,idx)=>{
+      return `
+      <li>
+        <input type="checkbox" data-index="${idx}" id="item${idx}" ${el.done == true ? 'checked':''}>
+        <label for="item${idx}">${el.text}</label>
+      </li>
+      `
+      }).join(' ');
+    },20)
+
+  }
+
+
+  function submit_tapas(){
+    
+    let re = new RegExp('item=.+','g')
+    let url = re.exec(window.location.href)
+    if(url == null)
+      return;
+    let input = url[0].split('=')[1];
+    
+    let newParam = {
+      text: input,
+      done: false
+    }
+    get_items();
+
+    items.push(newParam)
+    
+    window.localStorage.setItem('items',JSON.stringify(items))
+    updateList()
+  } 
+  submit.addEventListener('click',submit_tapas())
+  
 </script>
 
 

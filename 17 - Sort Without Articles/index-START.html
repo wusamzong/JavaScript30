@@ -45,10 +45,25 @@
 
   <ul id="bands"></ul>
 
+
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+let re = /\b(?!(the|a|an)\b)\w+/gi
+let noArticles = bands.map((el,idx)=>{
+  return [el.match(re).join(' '), idx]
+  //return [el.match(re)[0].trim(), idx]
+})
 
+let sort = noArticles.sort();
 
+let ul = document.querySelector('ul')
+
+let text = sort.map((el)=>{
+    return `
+      <li>${ bands[el[1]] }</li>
+    `
+  }).join('')
+ul.innerHTML = text;
 </script>
 
 </body>

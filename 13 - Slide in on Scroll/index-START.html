@@ -67,20 +67,15 @@
     
 
     document.addEventListener('scroll',()=>{
-      
+      console.count('num');
       let img = imgs.map((el)=>{
         let reactPostion = [el[0]-400, el[0]+400];
-        console.log(window.scrollY,reactPostion[1]);
-        console.log(window.screenY<reactPostion[1]);
         return (window.scrollY>reactPostion[0] && window.scrollY<reactPostion[1])
         
       })
-      console.log(img);
       img.forEach((e,idx)=>{
         if(e==true){
           imgs[idx][1].classList.add('active')
-        }else{
-          imgs[idx][1].classList.remove('active')
         }
       })
       

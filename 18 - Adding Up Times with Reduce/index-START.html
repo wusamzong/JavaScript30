@@ -182,6 +182,28 @@
     </li>
   </ul>
 <script>
+  let li = Array.from(document.getElementsByTagName('li'))
+  
+  let re = /(?!\:)[0-9]+/gi
+  let times = li.map(el => {
+    let time = el.getAttribute('data-time')
+    return time.match(re)
+  });
+
+  let result = times.reduce((total, cur)=>{
+    total[1] += parseInt(cur[0])
+    total[2] += parseInt(cur[1])
+    if(total[2]>=60){
+      total[2] %= 60;
+      total[1]++;
+    }
+    if(total[1]>=60){
+      total[1] %= 60;
+      total[0]++;
+    }
+    return total;
+  },[0,0,0])
+  console.log(result);
 </script>
 </body>
 </html>
