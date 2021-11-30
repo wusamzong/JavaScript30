@@ -4,14 +4,31 @@
   <meta charset="UTF-8">
   <title>Speech Detection</title>
 </head>
-<body>
+<body onload="">
 
-  <div class="words" contenteditable>
-  </div>
+  <div class="words" contenteditable></div>
 
 <script>
+  let voice;
+  let words = document.querySelector('.words')
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  let recognition = new SpeechRecognition();
+  recognition.start();
+
+  recognition.addEventListener('result',(e)=>{
+    let result = e.results[0][0].transcript
+    let inner = words.innerHTML
+    inner = inner.concat(`
+        <p>${result}</p>
+      `)
+      console.log(inner);
+    words.innerHTML = inner;
+  })
+
+  recognition.addEventListener('end', recognition.start);
+
+  
 
 </script>
 
