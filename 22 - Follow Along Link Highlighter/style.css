@@ -35,6 +35,8 @@ a {
 .highlight {
   transition: all 0.2s;
   border-bottom: 2px solid white;
+  height: 20px;
+  width: 50px;
   position: absolute;
   top: 0;
   background: white;

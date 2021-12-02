@@ -42,6 +42,15 @@
 
 <button></button>
 <script>
+let div = Array.from(document.getElementsByTagName('div'))
+div.forEach((el)=>{
+  el.addEventListener('click',(e,idx)=>{
+    console.log(e,idx);
+  },{
+    once: true
+  })
+})
+
 
 </script>
 </body>

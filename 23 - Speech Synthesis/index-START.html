@@ -13,7 +13,9 @@
       <h1>The Voiceinator 5000</h1>
 
       <select name="voice" id="voices">
-        <option value="">Select A Voice</option>
+        <option value="en-US">en-US</option>
+        <option value="en-UK">en-UK</option>
+        <option value="zh-Hant">zh-Hant</option>
       </select>
 
       <label for="rate">Rate:</label>
@@ -29,12 +31,49 @@
     </div>
 
 <script>
+  let synth = window.speechSynthesis;
   const msg = new SpeechSynthesisUtterance();
   let voices = [];
+  let controlParameter;
   const voicesDropdown = document.querySelector('[name="voice"]');
   const options = document.querySelectorAll('[type="range"], [name="text"]');
+  
   const speakButton = document.querySelector('#speak');
   const stopButton = document.querySelector('#stop');
+
+  setTimeout(()=>{
+    voices =synth.getVoices();
+    // console.log(voices);
+    initOptions()
+  },10)
+  
+  function initOptions(){
+    voicesDropdown.innerHTML = voices.map(v=>v.voiceURI).map((v,idx)=>{
+                      return `<option value="${idx}">${v}</option>`
+                    }).join(' ');
+  }
+
+  function startSpeech(){
+    controlParameter = {
+      rate: options[0].value,
+      pitch: options[1].value,
+      text: options[2].value,
+      option: voicesDropdown.value,
+    }
+    msg.rate = controlParameter.rate
+    msg.pitch = controlParameter.pitch
+    msg.text = controlParameter.text
+    msg.voice = voices[controlParameter.option]
+    
+    synth.speak(msg);
+  }
+  function stopSpeech(){
+    synth.cancel();
+  }
+
+  speakButton.addEventListener('click',startSpeech)
+  stopButton.addEventListener('click',stopSpeech)
+
 </script>
 
 </body>

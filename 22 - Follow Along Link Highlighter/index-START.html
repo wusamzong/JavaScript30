@@ -27,6 +27,23 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+  
+    let highlight = document.createElement('div')
+    document.body.appendChild(highlight)
+    highlight.classList.add('highlight')
+
+    let a = Array.from(document.getElementsByTagName('a'))
+    a.forEach(el => {
+      el.addEventListener('mouseover',(e)=>{
+        let coords = el.getBoundingClientRect();
+        console.log(coords);
+        highlight.style.top=coords.top+window.scrollY+'px'
+        highlight.style.left=coords.left+window.scrollX+'px'
+        highlight.style.width = coords.width + 'px'
+        highlight.style.height = coords.height + 'px'
+      })
+    });
+    
   </script>
 </body>
 </html>

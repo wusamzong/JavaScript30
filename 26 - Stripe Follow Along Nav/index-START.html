@@ -7,14 +7,15 @@
 <body>
   <h2>Cool</h2>
   <nav class="top">
-    <div class="dropdownBackground">
+    <!-- <div class="dropdownBackground">
       <span class="arrow"></span>
-    </div>
+    </div> -->
 
     <ul class="cool">
       <li>
         <a href="#">About Me</a>
         <div class="dropdown dropdown1">
+          <span class="arrow"></span>
           <div class="bio">
             <img src="https://logo.clearbit.com/wesbos.com">
             <p>Wes Bos sure does love web development. He teaches things like JavaScript, CSS and BBQ. Wait. BBQ isn't part of web development. It should be though!</p>
@@ -24,6 +25,7 @@
       <li>
         <a href="#">Courses</a>
         <ul class="dropdown courses">
+          <span class="arrow"></span>
           <li>
             <span class="code">RFB</span>
             <a href="https://ReactForBeginners.com">React For Beginners</a>
@@ -65,6 +67,7 @@
       <li>
         <a href="#">Other Links</a>
         <ul class="dropdown dropdown3">
+          <span class="arrow"></span>
           <li><a class="button" href="http://twitter.com/wesbos">Twitter</a></li>
           <li><a class="button" href="http://facebook.com/wesbos.developer">Facebook</a></li>
           <li><a class="button" href="http://wesbos.com">Blog</a></li>
@@ -160,6 +163,7 @@
     transition: all 0.3s, opacity 0.1s, transform 0.2s;
     transform-origin: 50% 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     opacity:0;
   }
@@ -169,7 +173,7 @@
   }
 
   .arrow {
-    position: absolute;
+    position: relative;
     width: 20px;
     height: 20px;
     display: block;
@@ -189,15 +193,25 @@
     float: left;
     margin-right: 20px;
   }
+  .dropdown1{
+    min-width: 520px;
+    min-height: 180px;
+  }
 
   .courses {
     min-width: 300px;
+    min-height: 375px;
   }
 
   .courses li {
     padding: 10px 0;
     display: block;
     border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+  .dropdown3{
+    min-width: 195px;
+    min-height: 230px;
+
   }
 
   .dropdown a {
@@ -220,6 +234,41 @@
 </style>
 
 <script>
+  let li = Array.from(document.querySelectorAll('ul[class="cool"]>li'))
+  console.log(li);
+  li.forEach(el=>{
+    el.addEventListener('mousemove',(e)=>{
+      // let span = el.querySelector('span')
+      // el.getBoundingClientRect()
+      
+      let ul = el.querySelector('ul')
+      if(ul!=null){
+        ul.classList.add('dropdownBackground')
+        ul.classList.add('open')
+        // ul.style.width = coords.width
+        // ul.style.height = coords.height
+      }else{
+        let div = el.querySelector('div')
+        div.classList.add('dropdownBackground')
+        div.classList.add('open')
+      }
+
+    })
+
+    el.addEventListener('mouseout',(e)=>{
+      let ul = el.querySelector('ul')
+      if(ul!=null){
+        ul.classList.remove('dropdownBackground')
+        ul.classList.remove('open')
+      }else{
+        let div = el.querySelector('div')
+        div.classList.remove('dropdownBackground')
+        div.classList.remove('open')
+      }    
+      // console.log(); 
+    })
+  })
+
 </script>
 
 </body>
