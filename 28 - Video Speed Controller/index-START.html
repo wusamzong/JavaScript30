@@ -15,6 +15,18 @@
   </div>
 
 <script>
+  let video = document.getElementsByTagName('video')[0]
+  let speed= document.querySelector('.speed')
+  speed.addEventListener('mousemove',(e)=>{
+    let speed_bar = speed.querySelector('.speed-bar')
+    let percent = e.offsetY/speed.getBoundingClientRect().height
+    speed_bar.innerHTML = `${Math.round((percent*3.5+0.5)*10)/10}x`
+    speed_bar.style.height = Math.round(percent*100)+'%'
+
+    let playbackRate = 0.5 + percent *3.5
+    video.playbackRate = playbackRate
+    
+  })
 </script>
 </body>
 </html>

@@ -36,7 +36,28 @@
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
+  let score = 0;
+  Array.from(holes).forEach(el=>{
+    el.addEventListener('click',(e)=>{
+      if(e.target.classList.contains('mole')){
+        el.parentNode.classList.remove('up')
+        score++;
+        scoreBoard.innerHTML = score
+      }
+      
+    })
+  })
+  
+  function startGame(){
+    
+    let showUp = setInterval(()=>{
+      let random = Math.floor(Math.random()*6)
+      holes[random].classList.add('up')
+      setTimeout(()=>holes[random].classList.remove('up'),750)
+    },Math.floor(Math.random()*4)*750)
 
+    setTimeout(()=>clearInterval(showUp),30*60*1000)
+  }
 </script>
 </body>
 </html>

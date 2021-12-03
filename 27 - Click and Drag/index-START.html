@@ -35,6 +35,58 @@
   </div>
 
 <script>
+  let item = document.querySelector('body>div')
+  let x;
+  let click = false;
+
+  function mouseDownHandler(e){
+    console.log('down');
+    x = e.offsetX;
+    click = true;
+    
+  }
+  function mouseMoveHandler(e){
+    if(!click)
+      return
+    item.scrollLeft = item.scrollLeft + (x-e.offsetX)
+  }
+  function mouseUpHandler(e){
+    // item.removeEventListener('mousedown',()=>{})
+    click = false;
+    document.removeEventListener('mouseup',()=>{})
+    document.removeEventListener('mousemove',()=>{})
+  }
+  
+  
+  item.addEventListener('mousedown',mouseDownHandler)
+  item.addEventListener('mouseout',()=>click = false)
+  document.addEventListener('mouseup',mouseUpHandler)
+  document.addEventListener('mousemove', mouseMoveHandler)
+  
+  // document.addEventListener('mouseup',mouseUpHandler)
+
+
+  // body.addEventListener()
+
+  // item.addEventListener("dragover", function(e) {
+  //   e.preventDefault();
+  //   console.log('over'+e);
+  //   x = e.offsetX
+  // });
+
+  // item.addEventListener('dragstart',(e)=>{
+  //   item.style.cursor = "grab"
+  //   console.log(e);
+  //   console.log(e.offsetX-x);
+  //   item.scrollLeft += e.offsetX-x
+  //   x = e.offsetX
+  // })
+  // item.addEventListener('dragend',(e)=>{
+  //   item.style.cursor = "pointer"
+  //   console.log('end'+e);
+  // })
+  
+
 </script>
 
   </body>
